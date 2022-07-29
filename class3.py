@@ -1,5 +1,6 @@
-from player import Class3
+from class2 import Alchemist
 from high_class import AssassinCross
+from player import Class3
 
 
 class RuneKnight(Class3):
@@ -12,5 +13,10 @@ class RuneKnight(Class3):
 
 
 class GuillotineCross(Class3, AssassinCross):
+    def __init__(self, level: int, is_transcended: bool = False):
+        super().__init__(level, is_transcended)
+
+
+class Genetic(Class3, Alchemist):
     def __init__(self, level: int, is_transcended: bool = False):
         super().__init__(level, is_transcended)
