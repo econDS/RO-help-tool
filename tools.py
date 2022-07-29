@@ -57,8 +57,8 @@ class SimsTool:
                     sim.up_status('DEX', dex)
                     sim.up_status('LUK', luk)
                     sim.up_status('INT', intel)
-                    print(f"simulated for Alchemist: DEX{sim.status['DEX']}" +
-                          f" LUK{sim.status['LUK']} INT{sim.status['INT']}")
+                    print(f"simulated for Alchemist: DEX{sim.status['DEX']}"
+                          + f" LUK{sim.status['LUK']} INT{sim.status['INT']}")
                     potion_probs.append(sim.get_potion_creation_success_rate())
                     sims.append(sim)
         best_prob = max(potion_probs)

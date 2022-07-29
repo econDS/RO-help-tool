@@ -14,4 +14,3 @@ class RuneKnight(Class3):
 class GuillotineCross(Class3, AssassinCross):
     def __init__(self, level: int, is_transcended: bool = False):
         super().__init__(level, is_transcended)
-
