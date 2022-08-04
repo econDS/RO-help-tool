@@ -53,6 +53,8 @@ class Player:
             self.status_points -= status_point_required
         return True
 
+    def reset_status(self):
+        self.status = {'STR': 1, 'AGI': 1, 'VIT': 1, 'INT': 1, 'DEX': 1, 'LUK': 1}
 
 class Class1(Player):
     def __init__(self, level: int):

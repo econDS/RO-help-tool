@@ -13,15 +13,17 @@ def simulate(status_list: list[str], max_status: int, sim: PlayerFamily) -> tupl
     sims: list[PlayerFamily] = []
     probs: list[float] = []
     for status_combination in product(range(max_status), repeat=len(status_list)):
+        klass = globals()[type(sim).__name__]
+        sim = klass(sim.level)
         for status in status_list:
             sim.up_status(status, status_combination[status_list.index(status)])
-        sims.append(sim)
-        if type(sim).__name__ == 'RuneKnight':
-            probs.append(sim.get_rune_creation_success_rate())
-        elif type(sim).__name__ == 'AssassinCross':
-            probs.append(sim.get_poison_creation_success_rate())
-        elif type(sim).__name__ == 'Alchemist':
-            probs.append(sim.get_potion_creation_success_rate())
+            sims.append(sim)
+            if type(sim).__name__ == 'RuneKnight':
+                probs.append(sim.get_rune_creation_success_rate())
+            elif type(sim).__name__ == 'AssassinCross':
+                probs.append(sim.get_poison_creation_success_rate())
+            elif type(sim).__name__ == 'Alchemist':
+                probs.append(sim.get_potion_creation_success_rate())
     return sims, probs
 
 
