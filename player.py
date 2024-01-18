@@ -1,18 +1,4 @@
-import json
-
-# load config files
-with open('config/point_gain.json') as f:
-    point_gain_raw: dict[str, int] = json.load(f)
-    point_gain: dict[int, int] = {int(k): v for k, v in point_gain_raw.items()}
-with open('config/status_point.json') as f:
-    status_point_raw: dict[str, int] = json.load(f)
-    status_point: dict[int, int] = {int(k): v for k, v in status_point_raw.items()}
-with open('config/status_point_transcended.json') as f:
-    status_point_transcended_raw: dict[str, int] = json.load(f)
-    status_point_transcended: dict[int, int] = {int(k): v for k, v in status_point_transcended_raw.items()}
-with open('config/raise_status_cost.json') as f:
-    raise_status_cost_raw: dict[str, int] = json.load(f)
-    raise_status_cost: dict[int, int] = {int(k): v for k, v in raise_status_cost_raw.items()}
+from config import Config
 
 
 class Player:
@@ -20,6 +6,7 @@ class Player:
     class_3_max_status: int = 130
 
     def __init__(self, level: int, is_transcended: bool = False):
+        self.config = Config()
         self.level: int = level
         self.is_transcended: bool = is_transcended
         self.class_level: int = 1
@@ -29,8 +16,8 @@ class Player:
 
     def get_status_points(self):
         if self.is_transcended:
-            return status_point_transcended[self.level]
-        return status_point[self.level]
+            return self.config.status_point_transcended[self.level]
+        return self.config.status_point[self.level]
 
     def get_max_status(self):
         if self.class_level < 3:
@@ -39,7 +26,7 @@ class Player:
 
     def up_status(self, stat: str, amount: int = 1) -> bool:
         for a in range(amount):
-            status_point_required = raise_status_cost[self.status[stat]]
+            status_point_required = self.config.raise_status_cost[self.status[stat]]
             if self.status[stat] >= self.class_3_max_status:
                 print('Max status reached')
                 return False
