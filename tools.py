@@ -8,16 +8,22 @@ from player import Class2
 
 PlayerFamily = TypeVar('PlayerFamily', Class2, Alchemist, RuneKnight, GuillotineCross, AssassinCross, Genetic)
 
+class_factory = {
+    'RuneKnight': RuneKnight,
+    'AssassinCross': AssassinCross,
+    'Alchemist': Alchemist
+}
 
 def simulate(status_list: list[str], max_status: int, sim: PlayerFamily) -> tuple[list[PlayerFamily], list[float]]:
     sims: list[PlayerFamily] = []
     probs: list[float] = []
     for status_combination in product(range(max_status), repeat=len(status_list)):
-        klass = globals()[type(sim).__name__]
-        if klass == AssassinCross:
-            sim = klass(sim.level)
+        klass = class_factory[type(sim).__name__]
+        if isinstance(sim, AssassinCross):
+            sim = AssassinCross(sim.level)
         else:
             sim = klass(sim.level, sim.is_transcended)
+
         for status in status_list:
             sim.up_status(status, status_combination[status_list.index(status)])
             sims.append(sim)
